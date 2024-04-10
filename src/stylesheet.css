@@ -1,3 +1,4 @@
+/*Reset the default margin and padding and apply the centering to all elements*/
 *{
     padding: 0px;
     margin: 0px;
@@ -5,26 +6,52 @@
     align-items: center;
 }
 
+/*We set flex to not le t the calculator size to full width*/
 body{
+    display: flex;
     background-color: #404540;
-    
-    display: flex;
-    margin-top: 150px;
 }
 
-#calculator{
-    display: flex;
+/*All buttons will be squares*/
+button{
+    width: 68px;
+    height: 68px;
 
-    width: 338px;
-    height: 428px;
-
-    background-color: #272727;
+    text-decoration: none;
+    border: none;
     border-radius: 16px;
-    padding: 28px;
-    gap:14px
+
+    color:white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 27px;
+}
+
+.numberButton{
+    background-color: #385570;
+}
+
+.operatorButton{
+    background-color: #428C40;
+}
+
+#acButton{
+    background-color: #CA2946;
 }
 
 
+/*Main Container, it have the calculator*/
+#calculator{
+    background-color: #272727;
+    margin-top: 150px;
+
+    display: flex;
+
+    border-radius: 32px;
+    padding: 28px;
+    gap:14px;
+}
+
+/*Left container of the calculator, it has the box and the numbers*/
 #numbersFrame{
     display: flex;
     flex-direction: column;
@@ -46,18 +73,7 @@ body{
     gap: 14px;
 }
 
-button{
-    background-color: antiquewhite;
-    width: 68px;
-    height: 68px;
-    text-decoration: none;
-
-    border: none;
-
-    border-radius: 16px;
-
-}
-
+/*Right container of the calculator, it has the operators*/
 #operatorFrame{
     display: flex;
     flex-direction: column;
