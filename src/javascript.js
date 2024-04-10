@@ -1,3 +1,7 @@
+const firstNumberText = document.querySelector("#firstNumber");
+const secondNumberText = document.querySelector("#secondNumber");
+const operator = document.querySelector("#operator");
+
 let firstInput;
 let secondInput;
 let operation;
@@ -9,7 +13,8 @@ const operatorButtons = document.querySelectorAll(".operatorButton");
 added and the second number is not being added*/
 operatorButtons.forEach((button)=>{
     button.addEventListener("click", ()=>{
-        if(firstInput !== undefined && secondInput === undefined){
+        
+        if(firstInput !== undefined && secondInput === undefined && secondNumberText.textContent === ""){
             operation = button.textContent;
             setOperatorScreen(operation); 
         }
@@ -25,11 +30,11 @@ available than it change only the second number.*/
 numberButtons.forEach((button)=>{
     button.addEventListener("click", ()=>{
         if(operation === undefined){
-            firstInput = button.textContent;
-            setFirstNumberScreen(firstInput); 
+            firstInput = getFirstNumberScreen();
+            setFirstNumberScreen(button.textContent); 
         }else{
-            secondInput = button.textContent;
-            setSecondNumberText(secondInput); 
+            secondInput = getSecondNumberScreen();
+            setSecondNumberText(button.textContent);   
         }
     });
 });
@@ -39,12 +44,7 @@ const acButton = document.querySelector("#acButton");
 
 //When we click the AC we reset the field and the variables of the numbers and operation
 acButton.addEventListener("click", ()=>{
-    firstInput = undefined;
-    secondInput = undefined;
-    operation = undefined;
-    setOperatorScreen(undefined);
-    setFirstNumberScreen(undefined);
-    setSecondNumberText(undefined);
+    clear();
 });
 
 //Add the functionality for the equal sign button
@@ -52,49 +52,55 @@ const equalButton = document.querySelector("#resultButton");
 
 //Change the screen frame with the result of the operation between firstInput and SecondInput
 equalButton.addEventListener("click", ()=>{
+
     //The button works only if the firstinput secondinput and operation are not undefined
     if(firstInput === undefined || secondInput === undefined || operation === undefined){
         return;
     }
-
+    
     //We make the result using the operate function
     const result = operate(parseInt(firstInput), parseInt(secondInput), operation);
+
+    //Because we have 3 field in the html, we need to reset those 
+    clear();
 
     //We change the screen and reset the variables
     setFirstNumberScreen(result.toString());
 
-    //Because we have 3 field in the html, we need to reset those 
-    setSecondNumberText(undefined);
-    setOperatorScreen(undefined);
-    firstInput = undefined;
-    secondInput = undefined;
-    operation = undefined;
 });
 
 //Set the operatorText content to the parameter
-function setOperatorScreen(content){
-    const operator = document.querySelector("#operator");
-    operator.textContent = content;
-}
+function setOperatorScreen(content){operator.textContent = content;}
+
+function getOperatorScreen(){return operator.textContent;}
+
+function getFirstNumberScreen(){ return firstNumberText.textContent;}
 
 //Set the first number text content to the parameter
 function setFirstNumberScreen(content){
-    const firstNumberText = document.querySelector("#firstNumber");
-    firstNumberText.textContent = content;
+    if(firstNumberText.textContent.length === 4) return;
+
+    firstNumberText.textContent += content;
 }
+
+function getSecondNumberScreen(){ return secondNumberText.textContent;}
 
 //Set the second number text  content to the parameter
 function setSecondNumberText(content){
-    const secondNumberText = document.querySelector("#secondNumber");
-    secondNumberText.textContent = content;
-}
-
-function getOperatorScreen(){
-    const operator = document.querySelector("#operator");
-    return operator.textContent;
+    if(secondNumberText.textContent.length === 4)return;
+    
+    secondNumberText.textContent += content;
 }
 
 
+function clear(){
+    firstNumberText.textContent = undefined;
+    secondNumberText.textContent = undefined;
+    operator.textContent  = undefined;
+    firstInput = undefined;
+    secondInput = undefined;
+    operation = undefined;
+}
 
 function operate(a, b, operator){
     switch(operator){
@@ -115,5 +121,5 @@ function subtract(a, b) {return a - b};
 
 function multiply(a, b)  {return a * b};
 
-function divide(a, b)  {return a / b};
+function divide(a, b)  {return  (a / b).toFixed(2)};
    
