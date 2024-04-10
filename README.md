@@ -24,12 +24,5 @@ Just because this is a simple project doesn't mean we shouldn't pay attention to
 </p>
 
 
-## Flowchart
-
-I conducted a small experiment where I aimed to elucidate the logic or steps through a flowchart. This is merely a basic guide on its functionality. However, it remains incomplete as I still need to incorporate the float point functionality.
-
-<p align="center">
-  <img src="img/FlowChart.svg" style="width:400px; border-radius: 36px; margin: 16px">
-</p>
 
 ------------------------

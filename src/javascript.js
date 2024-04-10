@@ -5,6 +5,7 @@ const operator = document.querySelector("#operator");
 let firstInput;
 let secondInput;
 let operation;
+let isResult;
 
 //Add the functionality to all the operator buttons
 const operatorButtons = document.querySelectorAll(".operatorButton");
@@ -13,10 +14,11 @@ const operatorButtons = document.querySelectorAll(".operatorButton");
 added and the second number is not being added*/
 operatorButtons.forEach((button)=>{
     button.addEventListener("click", ()=>{
-        
+
         if(firstInput !== undefined && secondInput === undefined && secondNumberText.textContent === ""){
             operation = button.textContent;
             setOperatorScreen(operation); 
+            isResult = false;
         }
     });
 });
@@ -29,12 +31,16 @@ is added only when the operator is not clicked, if instead the operation is
 available than it change only the second number.*/
 numberButtons.forEach((button)=>{
     button.addEventListener("click", ()=>{
+        if(isResult === true){
+            return;
+        }
+        
         if(operation === undefined){
-            firstInput = getFirstNumberScreen();
             setFirstNumberScreen(button.textContent); 
+            firstInput = getFirstNumberScreen();
         }else{
-            secondInput = getSecondNumberScreen();
-            setSecondNumberText(button.textContent);   
+            setSecondNumberText(button.textContent);  
+            secondInput = getSecondNumberScreen(); 
         }
     });
 });
@@ -45,6 +51,7 @@ const acButton = document.querySelector("#acButton");
 //When we click the AC we reset the field and the variables of the numbers and operation
 acButton.addEventListener("click", ()=>{
     clear();
+    isResult = false;
 });
 
 //Add the functionality for the equal sign button
@@ -66,7 +73,8 @@ equalButton.addEventListener("click", ()=>{
 
     //We change the screen and reset the variables
     setFirstNumberScreen(result.toString());
-
+    firstInput = result.toString()
+    isResult = true;
 });
 
 //Set the operatorText content to the parameter
