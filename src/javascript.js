@@ -47,24 +47,28 @@ acButton.addEventListener("click", ()=>{
     setSecondNumberText(undefined);
 });
 
-
+//Add the functionality for the equal sign button
 const equalButton = document.querySelector("#resultButton");
 
+//Change the screen frame with the result of the operation between firstInput and SecondInput
 equalButton.addEventListener("click", ()=>{
+    //The button works only if the firstinput secondinput and operation are not undefined
     if(firstInput === undefined || secondInput === undefined || operation === undefined){
         return;
     }
 
-
+    //We make the result using the operate function
     const result = operate(parseInt(firstInput), parseInt(secondInput), operation);
 
+    //We change the screen and reset the variables
     setFirstNumberScreen(result.toString());
+
+    //Because we have 3 field in the html, we need to reset those 
+    setSecondNumberText(undefined);
     setOperatorScreen(undefined);
     firstInput = undefined;
     secondInput = undefined;
     operation = undefined;
-    setSecondNumberText(undefined);
-
 });
 
 //Set the operatorText content to the parameter
