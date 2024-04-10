@@ -34,7 +34,6 @@ numberButtons.forEach((button)=>{
     });
 });
 
-
 //Add the functionality to the AC button to empty the field calculator
 const acButton = document.querySelector("#acButton");
 
@@ -46,6 +45,26 @@ acButton.addEventListener("click", ()=>{
     setOperatorScreen(undefined);
     setFirstNumberScreen(undefined);
     setSecondNumberText(undefined);
+});
+
+
+const equalButton = document.querySelector("#resultButton");
+
+equalButton.addEventListener("click", ()=>{
+    if(firstInput === undefined || secondInput === undefined || operation === undefined){
+        return;
+    }
+
+
+    const result = operate(parseInt(firstInput), parseInt(secondInput), operation);
+
+    setFirstNumberScreen(result.toString());
+    setOperatorScreen(undefined);
+    firstInput = undefined;
+    secondInput = undefined;
+    operation = undefined;
+    setSecondNumberText(undefined);
+
 });
 
 //Set the operatorText content to the parameter
@@ -66,30 +85,29 @@ function setSecondNumberText(content){
     secondNumberText.textContent = content;
 }
 
-
-//Operations
-
-const operators = {
-    add : "add",
-    multiply : "multiply",
-    divide : "divide",
+function getOperatorScreen(){
+    const operator = document.querySelector("#operator");
+    return operator.textContent;
 }
+
+
 
 function operate(a, b, operator){
     switch(operator){
-        case "add": 
-            add(a, b);
-            break;
-        case "multiply":
-            multiply(a, b);
-            break;
-        case "divide":
-            divide(a, b);
-            break
+        case "+": 
+            return add(a, b);
+        case "-":
+            return subtract(a, b);
+        case "×":
+            return multiply(a, b);
+        case "÷":
+            return divide(a, b);
     }
 }
 
 function add(a, b) {return a + b};
+
+function subtract(a, b) {return a - b};
 
 function multiply(a, b)  {return a * b};
 
