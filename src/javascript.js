@@ -17,7 +17,7 @@ let isFloat = false;
 
 //When clicked let the user input 
 floatButton.addEventListener("click", ()=>{
-    if(firstInput === undefined || isFloat === true){
+    if(firstInput === undefined || isFloat === true || isResult === true){
         return;
     }
 
@@ -101,8 +101,22 @@ equalButton.addEventListener("click", ()=>{
         return;
     }
     
+    if(parseFloat(firstInput) === 0 && parseFloat(secondInput) === 0 && operation === "÷"){
+        clear();
+        firstNumberText.textContent = "Error";
+        isResult = true;
+        return;
+    }
+
     //We make the result using the operate function
     const result = operate(parseFloat(firstInput), parseFloat(secondInput), operation);
+
+    if(result === "Infinity"){
+        clear();
+        firstNumberText.textContent = "Infinity";
+        isResult = true;
+        return;
+    }
 
     //Because we have 3 field in the html, we need to reset those 
     clear();
