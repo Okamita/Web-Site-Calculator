@@ -6,6 +6,26 @@ let firstInput;
 let secondInput;
 let operation;
 
+
+function resizeText(){
+    const screenWidth = 102 + 26 + 73;
+    const textWidth = firstNumberText.offsetWidth + secondNumberText.offsetWidth + operator.offsetWidth;
+    const textScreen = document.querySelectorAll(".textScreen");
+
+    if(textWidth > screenWidth){
+        textScreen.forEach((element) => {
+            element.style.fontSize =  "30px";
+        });
+    }
+}
+
+function resetTextSize(){
+    const textScreen = document.querySelectorAll(".textScreen");
+    textScreen.forEach((element) => {
+        element.style.fontSize =  "38px";
+    });
+}
+
 //How much long can be a number? This includes 0 and .
 const maxLenghtNumber = 5;
 
@@ -69,6 +89,7 @@ numberButtons.forEach((button)=>{
         }else{
             setSecondNumberText(button.textContent);  
             secondInput = getSecondNumberScreen(); 
+            resizeText();
         }
 
         if(getSecondNumberScreen().includes(".")){
@@ -77,7 +98,6 @@ numberButtons.forEach((button)=>{
         }
         
         isFloat = false;
-
     });
 });
 
@@ -129,6 +149,7 @@ equalButton.addEventListener("click", ()=>{
 
     //We change the screen and reset the variables
     setFirstNumberScreen(result.toString());
+    resizeText();
     firstInput = result.toString()
     isResult = true;
 });
@@ -158,6 +179,7 @@ function setSecondNumberText(content){
 
 
 function clear(){
+    resetTextSize();
     isFloat = false;
     firstNumberText.textContent = undefined;
     secondNumberText.textContent = undefined;
