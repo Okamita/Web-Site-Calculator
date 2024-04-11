@@ -21,10 +21,10 @@ floatButton.addEventListener("click", ()=>{
         return;
     }
 
-    if(operation === undefined){
+    if(operation === undefined && !firstNumberText.textContent.includes(".")){
         setFirstNumberScreen(floatButton.textContent); 
         firstInput = getFirstNumberScreen();
-    }else{
+    }else if(!secondNumberText.textContent.includes(".") && operation !== undefined  && secondInput !== undefined){
         setSecondNumberText(floatButton.textContent);  
         secondInput = getSecondNumberScreen(); 
     }
@@ -106,6 +106,12 @@ equalButton.addEventListener("click", ()=>{
         firstNumberText.textContent = "Error";
         isResult = true;
         return;
+    }
+
+    if(firstInput.slice(-1) === "." ){
+        firstInput += "0";
+    }else if(secondInput.slice(-1) === "."){
+        secondInput += "0";
     }
 
     //We make the result using the operate function
