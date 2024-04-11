@@ -5,10 +5,38 @@ const operator = document.querySelector("#operator");
 let firstInput;
 let secondInput;
 let operation;
-let isResult;
+
+//How much long can be a number? This includes 0 and .
+const maxLenghtNumber = 5;
+
+//Add the functionality to the float button to input float number
+const floatButton = document.querySelector("#floatButton");
+
+//A variable to check if the float button is been pressed or not, to handle multiple pressure of the button
+let isFloat = false;
+
+//When clicked let the user input 
+floatButton.addEventListener("click", ()=>{
+    if(firstInput === undefined || isFloat === true){
+        return;
+    }
+
+    if(operation === undefined){
+        setFirstNumberScreen(floatButton.textContent); 
+        firstInput = getFirstNumberScreen();
+    }else{
+        setSecondNumberText(floatButton.textContent);  
+        secondInput = getSecondNumberScreen(); 
+    }
+
+    isFloat = true;
+});
 
 //Add the functionality to all the operator buttons
 const operatorButtons = document.querySelectorAll(".operatorButton");
+
+//A variable to check if the value on the screen is the result from equal button, this permit to use the number to other calculation
+let isResult;
 
 /*Every button operator change the operator only when the first number is been
 added and the second number is not being added*/
@@ -42,6 +70,14 @@ numberButtons.forEach((button)=>{
             setSecondNumberText(button.textContent);  
             secondInput = getSecondNumberScreen(); 
         }
+
+        if(getSecondNumberScreen().includes(".")){
+            isFloat = true;
+            return;
+        }
+        
+        isFloat = false;
+
     });
 });
 
@@ -66,7 +102,7 @@ equalButton.addEventListener("click", ()=>{
     }
     
     //We make the result using the operate function
-    const result = operate(parseInt(firstInput), parseInt(secondInput), operation);
+    const result = operate(parseFloat(firstInput), parseFloat(secondInput), operation);
 
     //Because we have 3 field in the html, we need to reset those 
     clear();
@@ -86,7 +122,7 @@ function getFirstNumberScreen(){ return firstNumberText.textContent;}
 
 //Set the first number text content to the parameter
 function setFirstNumberScreen(content){
-    if(firstNumberText.textContent.length === 4) return;
+    if(firstNumberText.textContent.length === maxLenghtNumber) return;
 
     firstNumberText.textContent += content;
 }
@@ -95,13 +131,14 @@ function getSecondNumberScreen(){ return secondNumberText.textContent;}
 
 //Set the second number text  content to the parameter
 function setSecondNumberText(content){
-    if(secondNumberText.textContent.length === 4)return;
+    if(secondNumberText.textContent.length === maxLenghtNumber)return;
     
     secondNumberText.textContent += content;
 }
 
 
 function clear(){
+    isFloat = false;
     firstNumberText.textContent = undefined;
     secondNumberText.textContent = undefined;
     operator.textContent  = undefined;
@@ -123,11 +160,11 @@ function operate(a, b, operator){
     }
 }
 
-function add(a, b) {return a + b};
+function add(a, b) {return (a + b).toFixed(2)};
 
-function subtract(a, b) {return a - b};
+function subtract(a, b) {return (a - b).toFixed(2)};
 
-function multiply(a, b)  {return a * b};
+function multiply(a, b)  {return (a * b).toFixed(2)};
 
 function divide(a, b)  {return  (a / b).toFixed(2)};
    
